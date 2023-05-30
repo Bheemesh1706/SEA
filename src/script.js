@@ -41,11 +41,12 @@ scene.add(directionalLight)
  * Boat Model
  */
 const gltfLoader = new GLTFLoader();
-let boatObject=null
+let boatObject = null
 gltfLoader.load('/models/st_maria/scene.gltf',
     (gltf) => {
-        gltf.scene.scale.set(0.1,0.1,0.1);
-        boatObject=gltf.scene;
+        gltf.scene.scale.set(0.1, 0.1, 0.1);
+        boatObject = gltf.scene;
+        gltf.scene.rotation.z = -.05;
         scene.add(gltf.scene)
     },
     (process) => {
@@ -56,11 +57,8 @@ gltfLoader.load('/models/st_maria/scene.gltf',
         console.log(error)
     });
 
-if(boatObject)
-{
-    console.log(boatObject)
-}
-    
+
+
 /**
  * Water
  */
@@ -76,7 +74,7 @@ const waterMaterial = new THREE.ShaderMaterial({
     fragmentShader: waterFragmentShader,
     uniforms: {
         uBigWavesElevation: {
-            value: 0.2
+            value: 0.1
         },
         uBigWavesFrequency: {
             value: new THREE.Vector2(4, 1.5)
@@ -182,7 +180,9 @@ const clock = new THREE.Clock()
 const tick = () => {
     const elapsedTime = clock.getElapsedTime()
     waterMaterial.uniforms.uTime.value = elapsedTime;
-
+    if (boatObject) {
+        boatObject.position.y = Math.abs(Math.sin(elapsedTime)) * 0.1 + 0.38;
+    }
     // Update controls
     controls.update()
 
