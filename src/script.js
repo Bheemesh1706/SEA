@@ -182,6 +182,7 @@ const tick = () => {
     waterMaterial.uniforms.uTime.value = elapsedTime;
     if (boatObject) {
         boatObject.position.y = Math.abs(Math.sin(elapsedTime)) * 0.1 + 0.38;
+        boatObject.rotation.x= Math.sin(elapsedTime)*0.2 ;
     }
     // Update controls
     controls.update()
