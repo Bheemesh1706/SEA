@@ -156,7 +156,7 @@ window.addEventListener('resize', () => {
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.set(1, 1, 1)
+camera.position.set(1, 1, 5);
 scene.add(camera)
 
 // Controls
@@ -182,7 +182,9 @@ const tick = () => {
     waterMaterial.uniforms.uTime.value = elapsedTime;
     if (boatObject) {
         boatObject.position.y = Math.abs(Math.sin(elapsedTime)) * 0.1 + 0.4;
-        boatObject.rotation.x= Math.sin(elapsedTime)*0.2 ;
+        boatObject.rotation.x = Math.sin(elapsedTime) * 0.2;
+        if (elapsedTime <= 4.0)
+            camera.position.set(1, 1, elapsedTime - 2.5);
     }
     // Update controls
     controls.update()
